@@ -1,25 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { studentLogin } from '../../actions/authActions';
+import { adminLogin } from '../../actions/authActions';
 const FormItem = Form.Item;
 
-class StudentLoginComponent extends React.Component {
+class AdminLoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentmail: '',
-      studentpassword: ''
+      adminmail: '',
+      adminpassword: ''
     }
     this.authLogin = this.authLogin.bind(this);
   }
 
   authLogin = () => {
-      let { studentmail, studentpassword } = this.state;
-      this.props.studentLogin({
-        "username": studentmail,
-        "password": studentpassword
+      let { adminmail, adminpassword } = this.state;
+      this.props.adminLogin({
+        "username": adminmail,
+        "password": adminpassword
       })
   }
 
@@ -35,10 +35,10 @@ class StudentLoginComponent extends React.Component {
       <div>
         <Form className="login-form">
             <FormItem>
-                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Enter your student id" name="studentmail" onChange={this.changeValue.bind(this)} />
+                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Enter your admin id" name="adminmail" onChange={this.changeValue.bind(this)} />
             </FormItem>
             <FormItem>
-                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Enter your password" name="studentpassword" onChange={this.changeValue.bind(this)} />
+                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Enter your password" name="adminpassword" onChange={this.changeValue.bind(this)} />
             </FormItem>
             <FormItem style={{ 'textAlign': 'center' }}>
                 <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.authLogin}>
@@ -54,8 +54,8 @@ class StudentLoginComponent extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        studentLogin: studentLogin
+        adminLogin: adminLogin
     }, dispatch)
 }
   
-export default connect('', mapDispatchToProps)(StudentLoginComponent);
+export default connect('', mapDispatchToProps)(AdminLoginComponent);

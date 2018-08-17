@@ -22,3 +22,18 @@ export const authCheck = () => {
         payload: getToken
     }
 }
+
+export const adminLogin = (data) => {
+    return (dispatch) => {
+        axios.post('http://api.evermoremoney.com.au/admin/login', data, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(res => {
+            dispatch({
+                type: 'ADMINAUTH',
+                payload: res.data
+            })
+        })
+    }    
+}

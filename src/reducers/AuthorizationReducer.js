@@ -4,7 +4,8 @@ import axios from 'axios';
 const initialState = {
     isStudentLogged: false,
     studentName: '',
-    studentId: ''
+    studentId: '',
+    isAdminLogged: false
 }
 
 export default function AuthorizationReducer(state = initialState, action) {
@@ -34,6 +35,31 @@ export default function AuthorizationReducer(state = initialState, action) {
                 }
             }
             return state;
+
+        case 'STUDENTLOGOUT':
+            localStorage.removeItem('studentToken');
+            delete axios.defaults.headers.common['Authorization'];
+            return {
+                isStudentLogged: false,
+                studentName: '',
+                studentId: ''
+            }
+        
+        case 'ADMINAUTH':
+            axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload.accessToken}`;
+            localStorage.setItem('studentToken', action.payload.accessToken);
+            const adminDecodeToken = jwt.decode(action.payload.accessToken);
+            return {
+                ...state,
+                isAdminLogged: true
+            };
+
+        case 'ADMINLOGOUT':
+            localStorage.removeItem('studentToken');
+            delete axios.defaults.headers.common['Authorization'];
+            return {
+                isAdminLogged: false
+            }
 
         default: return state;
     }

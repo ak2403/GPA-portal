@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DetailsComponent from './DetailsComponent';
 import GradesComponent from './GradesComponent';
-import { getStudentDetails } from '../../actions/studentActions';
+import { getStudentDetails, studentLogout } from '../../actions/studentActions';
 
 class StudentComponent extends React.Component {
   constructor(props) {
@@ -11,16 +11,17 @@ class StudentComponent extends React.Component {
     this.state = {
       isPersonalPage: false
     }
-  }
-
-  componentDidMount(){
-    let { studentId } = this.props;
+    this.logout = this.logout.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState){
     !nextProps.isStudentLogged && this.props.history.push('/')
     nextProps.studentId && this.props.getStudentDetails(nextProps.studentId);
     return true;
+  }
+
+  logout(){
+    this.props.studentLogout();
   }
 
   render() {
@@ -35,6 +36,9 @@ class StudentComponent extends React.Component {
                 Details
               </li>
             </ul>
+            <button onClick={this.logout}>
+              Logout
+            </button>
           </div>
           <div className="student-container">
             <div className="student-detail-view">
@@ -51,7 +55,8 @@ class StudentComponent extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    getStudentDetails: getStudentDetails
+    getStudentDetails: getStudentDetails,
+    studentLogout: studentLogout
   }, dispatch)
 }
 

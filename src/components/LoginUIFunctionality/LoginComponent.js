@@ -1,11 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-import { Form, Icon, Input, Button } from 'antd';
-import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import AdminLoginComponent from './AdminLoginComponent';
 import StudentLoginComponent from './StudentLoginComponent';
-const FormItem = Form.Item;
 
 class loginForm extends React.Component {
   constructor(props) {
@@ -15,38 +12,28 @@ class loginForm extends React.Component {
     }
   }
 
-  componentWillMount() {
-  }
-
-  onClick() {
-  }
-
-  changeValue(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
   shouldComponentUpdate(nextProps, nextState){
-    console.log(nextProps.isStudentLogged)
     if(nextProps.isStudentLogged){
       this.props.history.push('/student')
+    }else if(nextProps.isAdminLogged){
+      this.props.history.push('/admin')
     }
+    return true;
   }
 
   render() {
     return (
       <div>
         <ul className="LoginOptions">
-          <li>
+          <li onClick={() => this.setState({ isAdmin: true })}>
             Admin Login
             </li>
-            <li>
+            <li onClick={() => this.setState({ isAdmin: false })}>
               Student Login
               </li>
           </ul>
           <div>
-            <StudentLoginComponent />
+            { this.state.isAdmin ? <AdminLoginComponent /> : <StudentLoginComponent /> }
             </div>
       </div>
 
@@ -55,9 +42,10 @@ class loginForm extends React.Component {
 }
 
 const mapStateToProps = (props) => {
-  let { isStudentLogged, studentName } = props.authorization;
+  let { isStudentLogged, studentName, isAdminLogged } = props.authorization;
   return {
       isStudentLogged: isStudentLogged,
+      isAdminLogged: isAdminLogged,
       studentName: studentName
   }
 }

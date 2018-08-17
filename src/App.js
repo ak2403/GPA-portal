@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import LoginComponent from './components/LoginUIFunctionality/LoginComponent';
 import StudentComponent from './components/StudentUIFunctionality/StudentComponent';
+import AdminComponent from './components/AdminUIFunctionality/AdminComponent';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { authCheck } from './actions/authActions';
@@ -19,8 +20,9 @@ class App extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    let { isStudentLogged } = this.props;
+    let { isStudentLogged, isAdminLogged } = nextProps;
     isStudentLogged && this.props.history.push('/student')
+    isAdminLogged && this.props.history.push('/admin')
     return true;
   }
 
@@ -31,6 +33,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={LoginComponent} />
             <Route path="/student" component={StudentComponent} />
+            <Route path="/admin" component={AdminComponent} />
           </Switch>
         </BrowserRouter>
       </div>
@@ -45,9 +48,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (props) => {
-  let { isStudentLogged, studentName } = props.authorization;
+  let { isStudentLogged, studentName, isAdminLogged } = props.authorization;
   return {
       isStudentLogged: isStudentLogged,
+      isAdminLogged: isAdminLogged,
       studentName: studentName
   }
 }

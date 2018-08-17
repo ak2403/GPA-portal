@@ -13,3 +13,9 @@ export const getStudentDetails = (data) => {
         });
     }
 }
+
+export const studentLogout = () => {
+    return {
+        type: 'STUDENTLOGOUT'
+    }
+}
