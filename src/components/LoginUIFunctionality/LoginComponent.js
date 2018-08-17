@@ -28,6 +28,7 @@ class loginForm extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
+    console.log(nextProps.isStudentLogged)
     if(nextProps.isStudentLogged){
       this.props.history.push('/student')
     }

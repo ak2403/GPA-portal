@@ -6,3 +6,8 @@ body{
 .LoginOptions li{
   display: inline;
 }
+.student-container{
+  width: 90%;
+  height: 900px;
+  margin: 0 auto;
+}

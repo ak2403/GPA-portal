@@ -1,7 +1,5 @@
 import React from 'react';
-import axios from 'axios';
 import { Form, Icon, Input, Button } from 'antd';
-import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { studentLogin } from '../../actions/authActions';

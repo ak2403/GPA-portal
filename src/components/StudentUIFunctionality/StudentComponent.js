@@ -1,29 +1,48 @@
 import React from 'react';
-import axios from 'axios';
-import { Form, Icon, Input, Button } from 'antd';
-import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import NavBarComponent from '../Basic/NavBarComponent';
 import DetailsComponent from './DetailsComponent';
+import GradesComponent from './GradesComponent';
 import { getStudentDetails } from '../../actions/studentActions';
 
 class StudentComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isPersonalPage: false
+    }
   }
 
   componentDidMount(){
-    let { isStudentLogged, studentId } = this.props;
-    !isStudentLogged && this.props.history.push('/')
-    this.props.getStudentDetails(studentId);
+    let { studentId } = this.props;
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    !nextProps.isStudentLogged && this.props.history.push('/')
+    nextProps.studentId && this.props.getStudentDetails(nextProps.studentId);
+    return true;
   }
 
   render() {
     return (
       <div>
-          <NavBarComponent />
-          <DetailsComponent />
+          <div>
+            <ul>
+              <li onClick={() => this.setState({isPersonalPage: false})}>
+                Grades
+              </li>
+              <li onClick={() => this.setState({isPersonalPage: true})}>
+                Details
+              </li>
+            </ul>
+          </div>
+          <div className="student-container">
+            <div className="student-detail-view">
+
+            </div>
+            {this.state.isPersonalPage ? <DetailsComponent /> : <GradesComponent />}
+          </div>
+          
       </div>
 
     )

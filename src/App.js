@@ -21,6 +21,7 @@ class App extends Component {
   shouldComponentUpdate(nextProps, nextState){
     let { isStudentLogged } = this.props;
     isStudentLogged && this.props.history.push('/student')
+    return true;
   }
 
   render() {
