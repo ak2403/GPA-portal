@@ -2,13 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getSubjects } from '../../actions/adminActions';
+import { Table } from 'antd';
 
 class SubjectComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            subjectLists: ''
+            subjectLists: [],
+            columns: [{
+                title: 'Code',
+                key: 'code',
+                dataIndex: 'code'
+            },{
+                title: 'Subject Title',
+                key: 'title',
+                dataIndex: 'title'
+            }]
         }
     }
 
@@ -21,8 +31,15 @@ class SubjectComponent extends React.Component {
     shouldComponentUpdate(nextProps, nextState){
         let { subjects } = nextProps;
         if(subjects && this.state.isLoading){
+            let subjectArray = [];
+            subjects.data.map(subject => {
+                subjectArray.push({
+                    code: subject.code,
+                    title: subject.title
+                })
+            })
             this.setState({
-                subjectLists: subjects.data,
+                subjectLists: subjectArray,
                 isLoading: false
             })
         }
@@ -33,7 +50,7 @@ class SubjectComponent extends React.Component {
         return (
             <div>
                 Subjects
-
+                { this.state.isLoading ? 'Loading' : <Table dataSource={this.state.subjectLists} columns={this.state.columns} pagination={false} /> }
             </div>
 
         )
