@@ -1,0 +1,8 @@
+body{
+}
+.LoginOptions{
+  list-style: none;
+}
+.LoginOptions li{
+  display: inline;
+}
