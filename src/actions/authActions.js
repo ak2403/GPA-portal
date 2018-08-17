@@ -14,3 +14,11 @@ export const studentLogin = (data) => {
         })
     }    
 }
+
+export const authCheck = () => {
+    let getToken = localStorage.getItem('studentToken');
+    return {
+        type: 'checkAuth',
+        payload: getToken
+    }
+}

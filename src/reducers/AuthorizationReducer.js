@@ -3,7 +3,8 @@ import axios from 'axios';
 
 const initialState = {
     isStudentLogged: false,
-    studentName: ''
+    studentName: '',
+    studentId: ''
 }
 
 export default function AuthorizationReducer(state = initialState, action) {
@@ -16,8 +17,23 @@ export default function AuthorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isStudentLogged: true,
-                studentName: decodeToken.firstName
+                studentName: decodeToken.firstName,
+                studentId: decodingToken.studentId
             };
+
+        case 'checkAuth':
+            const decodingToken = jwt.decode(action.payload);
+            if(decodingToken){
+                if(decodingToken.studentId){
+                    return {
+                        ...state,
+                        isStudentLogged: true,
+                        studentName: decodingToken.firstName,
+                        studentId: decodingToken.studentId
+                    }
+                }
+            }
+            return state;
 
         default: return state;
     }
