@@ -4,14 +4,25 @@ import { Form, Icon, Input, Button } from 'antd';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { studentLogin } from '../../actions/authActions';
 const FormItem = Form.Item;
 
 class StudentLoginComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAdmin: false
+      studentmail: '',
+      studentpassword: ''
     }
+    this.authLogin = this.authLogin.bind(this);
+  }
+
+  authLogin = () => {
+      let { studentmail, studentpassword } = this.state;
+      this.props.studentLogin({
+        "username": studentmail,
+        "password": studentpassword
+      })
   }
 
   componentWillMount() {
@@ -32,13 +43,13 @@ class StudentLoginComponent extends React.Component {
       <div>
         <Form className="login-form">
             <FormItem>
-                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="User Name" name="username" />
+                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Enter your student id" name="studentmail" onChange={this.changeValue.bind(this)} />
             </FormItem>
             <FormItem>
-                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Enter your Password" name="userpassword" />
+                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Enter your password" name="studentpassword" onChange={this.changeValue.bind(this)} />
             </FormItem>
             <FormItem style={{ 'textAlign': 'center' }}>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.authLogin}>
                     Login
                 </Button>
             </FormItem>
@@ -49,4 +60,10 @@ class StudentLoginComponent extends React.Component {
   }
 }
 
-export default StudentLoginComponent;
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        studentLogin: studentLogin
+    }, dispatch)
+}
+  
+export default connect('', mapDispatchToProps)(StudentLoginComponent);

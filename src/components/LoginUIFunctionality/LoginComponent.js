@@ -27,6 +27,12 @@ class loginForm extends React.Component {
     })
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps.isStudentLogged){
+      this.props.history.push('/student')
+    }
+  }
+
   render() {
     return (
       <div>
@@ -47,4 +53,12 @@ class loginForm extends React.Component {
   }
 }
 
-export default loginForm;
+const mapStateToProps = (props) => {
+  let { isStudentLogged, studentName } = props.authorization;
+  return {
+      isStudentLogged: isStudentLogged,
+      studentName: studentName
+  }
+}
+
+export default connect(mapStateToProps, '')(loginForm);

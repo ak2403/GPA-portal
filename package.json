@@ -16,6 +16,7 @@
   "devDependencies": {
     "antd": "^3.8.1",
     "axios": "^0.18.0",
+    "jsonwebtoken": "^8.3.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
