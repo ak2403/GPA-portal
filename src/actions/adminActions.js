@@ -21,3 +21,19 @@ export const getSubjects = () => {
         
     }
 }
+
+export const getStudents = () => {
+    return (dispatch) => {
+        let subjectURL = 'http://api.evermoremoney.com.au/students';
+        let adminToken = localStorage.getItem('studentToken');
+        
+        axios.get(subjectURL, { headers: {"Authorization" : `Bearer ${adminToken}`} })
+            .then(res => {
+                dispatch({
+                    type: 'SENDSTUDENTS',
+                    payload: res.data
+                })
+            })
+        
+    }
+}

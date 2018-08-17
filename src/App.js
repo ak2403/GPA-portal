@@ -18,14 +18,7 @@ class App extends Component {
   componentDidMount(){
     this.props.authCheck();
   }
-
-  shouldComponentUpdate(nextProps, nextState){
-    let { isStudentLogged, isAdminLogged } = nextProps;
-    isStudentLogged && this.props.history.push('/student')
-    isAdminLogged && this.props.history.push('/admin')
-    return true;
-  }
-
+  
   render() {
     return (
       <div className="App">

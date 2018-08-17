@@ -48,8 +48,7 @@ class SubjectComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                Subjects
+            <div className="subject-content-container">
                 { this.state.isLoading ? 'Loading' : <Table dataSource={this.state.subjectLists} columns={this.state.columns} pagination={false} /> }
             </div>
 

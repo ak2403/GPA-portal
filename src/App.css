@@ -11,3 +11,33 @@ body{
   height: 900px;
   margin: 0 auto;
 }
+.nav-bar{
+  width: 100%;
+  background-color: #3498db;
+  height: 70px;
+}
+.nav-bar ul{
+  float: left;
+  list-style: none;
+}
+.nav-bar ul li{
+  display: inline-block;
+  background-color: white;
+  border-radius: 5px;
+  padding: 6px 12px;
+  margin-top: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.nav-bar button{
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+.admin-content-container{
+  width: 80%;
+  margin: 15px auto;
+}
+.admin-content-container{
+  width: 100%
+}

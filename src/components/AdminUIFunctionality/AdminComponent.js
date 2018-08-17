@@ -1,22 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Button } from 'antd';
 import { adminLogout } from '../../actions/adminActions';
 import SubjectComponent from './SubjectComponent';
+import StudentComponent from './StudentComponent';
 
 class AdminComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isPersonalPage: false
+            changePages: false
         }
         this.logout = this.logout.bind(this);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        !nextProps.isAdminLogged && this.props.history.push('/')
-        nextProps.studentId && this.props.getStudentDetails(nextProps.studentId);
-        return true;
+    componentDidMount(){
+        let getToken = localStorage.getItem('studentToken');
+        if(!getToken){
+          this.props.history.push('/')
+        }   
     }
 
     logout() {
@@ -24,20 +27,25 @@ class AdminComponent extends React.Component {
     }
 
     render() {
+        console.log(this.state.changePages)
         return (
             <div>
-                <div>
+                <div className="nav-bar">
                     <ul>
-                        <li onClick={() => this.setState({ isPersonalPage: false })}>
+                        <li onClick={() => this.setState({ changePages: true })}>
                             Subjects
                         </li>
+                        <li onClick={() => this.setState({ changePages: false })}>
+                            Students
+                        </li>
+
                     </ul>
-                    <button onClick={this.logout}>
+                    <Button onClick={this.logout}>
                         Logout
-                    </button>
+                    </Button>
                 </div>
-                <div>
-                    <SubjectComponent />
+                <div className="admin-content-container">
+                    { this.state.changePages ? <SubjectComponent /> : <StudentComponent /> }
                 </div>
             </div>
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AdminLoginComponent from './AdminLoginComponent';
 import StudentLoginComponent from './StudentLoginComponent';
+import jwt from 'jsonwebtoken';
 
 class loginForm extends React.Component {
   constructor(props) {
@@ -19,6 +20,14 @@ class loginForm extends React.Component {
       this.props.history.push('/admin')
     }
     return true;
+  }
+
+  componentDidMount(){
+    let getToken = localStorage.getItem('studentToken');
+    if(getToken){
+      let decodeToken = jwt.decode(getToken);
+      decodeToken.adminId ? this.props.history.push('/admin') : this.props.history.push('/student')
+    }    
   }
 
   render() {
