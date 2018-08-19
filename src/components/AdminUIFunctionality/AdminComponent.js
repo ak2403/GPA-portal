@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { adminLogout } from '../../actions/adminActions';
 import SubjectComponent from './SubjectComponent';
 import StudentComponent from './StudentComponent';
+import jwt from 'jsonwebtoken';
 
 class AdminComponent extends React.Component {
     constructor(props) {
@@ -17,13 +18,17 @@ class AdminComponent extends React.Component {
 
     componentDidMount(){
         let getToken = localStorage.getItem('studentToken');
-        if(!getToken){
-          this.props.history.push('/')
-        }   
+    if(!getToken){
+      this.props.history.push('/')
+    }else{
+      let decodeToken = jwt.decode(getToken);
+      decodeToken.studentId && this.props.history.push('/student')
+    }  
     }
 
     logout() {
         this.props.adminLogout();
+        this.props.history.push('/');
     }
 
     render() {

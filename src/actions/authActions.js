@@ -34,6 +34,10 @@ export const adminLogin = (data) => {
                 type: 'ADMINAUTH',
                 payload: res.data
             })
+        }).catch(err => {
+            dispatch({
+                type: 'AUTHERROR'
+            })
         })
     }    
 }

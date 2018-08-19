@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getStudents } from '../../actions/adminActions';
 import { Table } from 'antd';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 class StudentComponent extends Component{
     constructor(){
@@ -10,6 +11,7 @@ class StudentComponent extends Component{
         this.state = {
             isLoading: true,
             studentLists: [],
+            studentChart: [],
             columns: [{
                 title: 'Student First Name',
                 key: 'firstName',
@@ -34,16 +36,26 @@ class StudentComponent extends Component{
         if(this.state.isLoading){
             let { students } = nextProps;
             let studentArray = [];
+            let chartData = [];
             students.data.map(student => {
                 studentArray.push({
                     firstName: student.firstName,
                     lastName: student.lastName,
                     email: student.email
                 })
+                let totalGrade = 0;
+                Object.keys(student.subjects).map(grade => {
+                    totalGrade+= Number(student.subjects[grade])
+                })
+                chartData.push({
+                    name: student.firstName,
+                    uv: totalGrade/4
+                })
             })
             this.setState({
                 isLoading: false,
-                studentLists: studentArray
+                studentLists: studentArray,
+                studentChart: chartData
             })
         }
         return true;
@@ -51,8 +63,28 @@ class StudentComponent extends Component{
 
     render(){
         return (
-            <div>
-                {this.state.isLoading ? 'Loading' : <Table dataSource={this.state.studentLists} columns={this.state.columns} pagination={false} />}
+            <div className="admin-student-container">
+                { this.state.isLoading ? 'Loading' : 
+                        <div className="admin-student-inherit">
+                            <div className="admin-student-chart">
+                            
+                                <BarChart width={300} height={300} data={this.state.studentChart}>
+                                <XAxis dataKey="name"/>
+                                <YAxis/>
+                                <Tooltip/>
+                                <Bar dataKey="pv" fill="#8884d8" />
+                                <Bar dataKey="uv" fill="#82ca9d" />
+                                </BarChart>
+                            
+                            
+                            </div>
+
+
+                            <div className="admin-student-table">
+                                <Table dataSource={this.state.studentLists} columns={this.state.columns} pagination={false} />
+                            </div>
+                        </div>
+                }
             </div>
         )
     }

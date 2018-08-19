@@ -2,9 +2,13 @@ body{
 }
 .LoginOptions{
   list-style: none;
+  width: 100%;
+  text-align: center;
 }
 .LoginOptions li{
   display: inline;
+  padding: 0 20px;
+  cursor: pointer;
 }
 .student-container{
   width: 90%;
@@ -36,8 +40,24 @@ body{
 }
 .admin-content-container{
   width: 80%;
-  margin: 15px auto;
+  margin: 20px auto;
 }
-.admin-content-container{
-  width: 100%
+.admin-student-container{
+  width: 90%;
+  margin: 20px auto;
+}
+.admin-student-inherit{
+  width: 100%;
+}
+.admin-student-chart{
+  width: 30%;
+  float: left;
+}
+.admin-student-table{
+  width: 70%;
+  float: right;
+}
+.login-container{
+  width: 70%;
+  margin: 50px auto;
 }

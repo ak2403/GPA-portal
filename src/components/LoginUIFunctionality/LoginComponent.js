@@ -9,7 +9,8 @@ class loginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAdmin: false
+      isAdmin: false,
+      isAuthError: false
     }
   }
 
@@ -18,6 +19,12 @@ class loginForm extends React.Component {
       this.props.history.push('/student')
     }else if(nextProps.isAdminLogged){
       this.props.history.push('/admin')
+    }
+
+    if(nextProps.isAuthError){
+      this.setState({
+        isAuthError: true
+      })
     }
     return true;
   }
@@ -32,7 +39,7 @@ class loginForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="login-container">
         <ul className="LoginOptions">
           <li onClick={() => this.setState({ isAdmin: true })}>
             Admin Login
@@ -41,6 +48,7 @@ class loginForm extends React.Component {
               Student Login
               </li>
           </ul>
+          {this.state.isAuthError ? <p>Plese enter the correct username and password</p> : ''}
           <div>
             { this.state.isAdmin ? <AdminLoginComponent /> : <StudentLoginComponent /> }
             </div>
@@ -51,11 +59,12 @@ class loginForm extends React.Component {
 }
 
 const mapStateToProps = (props) => {
-  let { isStudentLogged, studentName, isAdminLogged } = props.authorization;
+  let { isStudentLogged, studentName, isAdminLogged, authError } = props.authorization;
   return {
       isStudentLogged: isStudentLogged,
       isAdminLogged: isAdminLogged,
-      studentName: studentName
+      studentName: studentName,
+      authError: authError
   }
 }
 

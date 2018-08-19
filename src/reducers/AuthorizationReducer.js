@@ -5,7 +5,8 @@ const initialState = {
     isStudentLogged: false,
     studentName: '',
     studentId: '',
-    isAdminLogged: false
+    isAdminLogged: false,
+    authError: false
 }
 
 export default function AuthorizationReducer(state = initialState, action) {
@@ -19,7 +20,7 @@ export default function AuthorizationReducer(state = initialState, action) {
                 ...state,
                 isStudentLogged: true,
                 studentName: decodeToken.firstName,
-                studentId: decodingToken.studentId
+                studentId: decodeToken.studentId
             };
 
         case 'checkAuth':
@@ -59,6 +60,12 @@ export default function AuthorizationReducer(state = initialState, action) {
             delete axios.defaults.headers.common['Authorization'];
             return {
                 isAdminLogged: false
+            }
+        
+        case 'AUTHERROR':
+            return {
+                ...state,
+                authError: true
             }
 
         default: return state;

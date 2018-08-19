@@ -10,17 +10,24 @@ class StudentLoginComponent extends React.Component {
     super(props);
     this.state = {
       studentmail: '',
-      studentpassword: ''
+      studentpassword: '',
+      isInputEmpty: false
     }
     this.authLogin = this.authLogin.bind(this);
   }
 
   authLogin = () => {
       let { studentmail, studentpassword } = this.state;
-      this.props.studentLogin({
-        "username": studentmail,
-        "password": studentpassword
-      })
+      if(studentmail && studentpassword){
+          this.props.studentLogin({
+            "username": studentmail,
+            "password": studentpassword
+          })
+      }else{
+        this.setState({
+          isInputEmpty: true
+        })
+      }
   }
 
   changeValue(e) {
@@ -33,6 +40,7 @@ class StudentLoginComponent extends React.Component {
     
     return (
       <div>
+        {this.state.isInputEmpty ? <p>Please enter the username and password</p> : ''}
         <Form className="login-form">
             <FormItem>
                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Enter your student id" name="studentmail" onChange={this.changeValue.bind(this)} />

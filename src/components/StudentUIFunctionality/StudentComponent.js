@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import DetailsComponent from './DetailsComponent';
 import GradesComponent from './GradesComponent';
 import { getStudentDetails, studentLogout } from '../../actions/studentActions';
+import jwt from 'jsonwebtoken';
 
 class StudentComponent extends React.Component {
   constructor(props) {
@@ -20,8 +21,19 @@ class StudentComponent extends React.Component {
     return true;
   }
 
+  componentDidMount(){
+    let getToken = localStorage.getItem('studentToken');
+    if(!getToken){
+      this.props.history.push('/')
+    }else{
+      let decodeToken = jwt.decode(getToken);
+      decodeToken.adminId && this.props.history.push('/admin')
+    }   
+  }
+
   logout(){
     this.props.studentLogout();
+    this.props.history.push('/');
   }
 
   render() {
